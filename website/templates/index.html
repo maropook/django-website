@@ -1,0 +1,9 @@
+{%extends "base.html" %}
+{% load static %}
+
+{% block main %}
+{{username}}さんようこそ
+<h1>hーむ</h1>
+<img src="{% static 'b.png' %}"alt="">
+{% now "m月d日n:i"%}
+{% endblock %}

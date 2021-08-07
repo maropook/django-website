@@ -1,0 +1,11 @@
+{%extends "base.html" %}
+{% load static %}
+
+{% block main %}
+{{num_services}}個数
+
+{% for skil in skills %}
+<li>{{skil}}</li>
+{% empty %}からの場合
+{% endfor %}
+{% endblock %}
