@@ -13,12 +13,38 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include
+
+from django.contrib.auth.decorators import login_required
+
+from django.views.generic import TemplateView
+from registration import views
+
+# 実はページを表示するだけならこのように1行で書くことが出来ます。
+index_view = TemplateView.as_view(template_name="registration/index.html")
+
 
 urlpatterns = [
+    path('website/', include("website.urls")),
+    path('polls/', include('polls.urls')),
+    path("blog/", include("blog.urls")),
+
+
     path('admin/', admin.site.urls),
-    path('', include("website.urls")),
-       path('polls/', include('polls.urls')),
+   # login_requiredで囲むとログイン必須のページになります。
+    path("", login_required(index_view), name="index"),
+    # この１行でdjangoでデフォルトで用意している以下がすべて入ります。
+    # ・ログイン
+    # ・ログアウト
+    # ・パスワード変更
+    # ・パスワード再発行
+    path('', include("django.contrib.auth.urls")),
+    path("signup/", views.SignUpView.as_view(), name="signup"),
+
+    
+
+
 
 ]
